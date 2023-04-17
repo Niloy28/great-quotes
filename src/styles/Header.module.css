@@ -1,0 +1,39 @@
+.NavBar {
+	padding: 0.5rem;
+	display: flex;
+	background-color: rgb(134, 177, 69);
+	justify-content: space-between;
+	color: black;
+}
+
+.NavBar h2 {
+	padding-left: 2rem;
+}
+
+.NavBarList {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.NavBarList li {
+	font-size: large;
+	font-weight: 400;
+}
+
+a {
+	padding: 1em;
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	background-color: rgb(93, 124, 47);
+}
+
+a:active {
+	background-color: rgb(74, 99, 37);
+}
