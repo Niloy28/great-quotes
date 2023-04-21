@@ -5,29 +5,32 @@ import AllQuotes from "./pages/AllQuotes";
 import QuoteDetail from "./pages/QuoteDetail";
 import NewQuote from "./pages/NewQuote";
 
-import Header from "./components/Header";
+import Header from "./components/UI/Header";
+import Container from "./components/UI/Container";
 
 function App() {
 	return (
 		<>
 			<Header />
-			<Switch>
-				<Route path="/" exact>
-					<Redirect to="/quotes" />
-				</Route>
+			<Container>
+				<Switch>
+					<Route path="/" exact>
+						<Redirect to="/quotes" />
+					</Route>
 
-				<Route path="/quotes" exact>
-					<AllQuotes />
-				</Route>
+					<Route path="/quotes" exact>
+						<AllQuotes />
+					</Route>
 
-				<Route path="/quotes/new-quote" exact>
-					<NewQuote />
-				</Route>
+					<Route path="/quotes/new-quote" exact>
+						<NewQuote />
+					</Route>
 
-				<Route path="/quotes/:quoteId" exact>
-					<QuoteDetail />
-				</Route>
-			</Switch>
+					<Route path="/quotes/:quoteId" exact>
+						<QuoteDetail />
+					</Route>
+				</Switch>
+			</Container>
 		</>
 	);
 }
