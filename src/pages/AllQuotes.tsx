@@ -40,7 +40,9 @@ const AllQuotes = () => {
 					/>
 				</div>
 			)}
-			{!isLoading && data && data.map((quote) => <QuoteSummary {...quote} />)}
+			{!isLoading &&
+				data &&
+				data.map((quote) => <QuoteSummary key={quote.id} {...quote} />)}
 		</div>
 	);
 };
