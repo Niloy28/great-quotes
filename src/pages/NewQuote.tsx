@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
 import useFetch from "../hooks/use-fetch";
-
+import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
-
-const DB_INSERT_URL = "https://rpadtplhujhzqhhtyqbe.supabase.co/rest/v1/quotes";
 
 const NewQuote = () => {
 	const titleRef = useRef<HTMLInputElement>(null);
@@ -14,7 +12,7 @@ const NewQuote = () => {
 		data,
 		fetchData: insertData,
 		fetchError,
-	} = useFetch(DB_INSERT_URL);
+	} = useFetch(import.meta.env.VITE_QUOTE_BASE_URL);
 
 	const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -40,9 +38,7 @@ const NewQuote = () => {
 
 	return (
 		<Container>
-			<h2 className="text-center text-lg md:text-xl font-bold underline">
-				Add New Quote
-			</h2>
+			<Heading>Add New Quote</Heading>
 			<form className="flex flex-col gap-4" onSubmit={formSubmitHandler}>
 				<label htmlFor="quote-title">Title: </label>
 				<input
