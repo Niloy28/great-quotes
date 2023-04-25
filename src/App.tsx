@@ -7,11 +7,11 @@ import NewQuote from "./pages/NewQuote";
 
 import Header from "./components/UI/Header";
 import Container from "./components/UI/Container";
+import Layout from "./components/UI/Layout";
 
 function App() {
 	return (
-		<>
-			<Header />
+		<Layout>
 			<Container>
 				<Switch>
 					<Route path="/" exact>
@@ -31,7 +31,7 @@ function App() {
 					</Route>
 				</Switch>
 			</Container>
-		</>
+		</Layout>
 	);
 }
 
