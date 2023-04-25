@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import useFetch from "../hooks/use-fetch";
 import Quote from "../types/Quote";
 import Heading from "../components/UI/Heading";
+import QuoteDisplay from "../components/QuoteDisplay";
+import GridLoaderSpinner from "../components/UI/GridLoaderSpinner";
 
 const QUOTE_FETCH_BASE_URL = `${import.meta.env.VITE_QUOTE_BASE_URL}?id=eq.`;
 
@@ -24,8 +26,8 @@ const QuoteDetail = () => {
 
 	return (
 		<div>
-			<Heading>Quote Detail</Heading>
-			{!isLoading && data && <p>{data[0].quote}</p>}
+			{isLoading && <GridLoaderSpinner />}
+			{!isLoading && data && <QuoteDisplay {...data[0]} />}
 		</div>
 	);
 };
