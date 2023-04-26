@@ -4,7 +4,7 @@ import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
 
 const NewQuote = () => {
-	const titleRef = useRef<HTMLInputElement>(null);
+	const authorRef = useRef<HTMLInputElement>(null);
 	const quoteRef = useRef<HTMLTextAreaElement>(null);
 
 	const {
@@ -18,7 +18,7 @@ const NewQuote = () => {
 		event.preventDefault();
 
 		const data = {
-			title: titleRef.current?.value,
+			title: authorRef.current?.value,
 			quote: quoteRef.current?.value,
 		};
 
@@ -40,13 +40,14 @@ const NewQuote = () => {
 		<Container>
 			<Heading>Add New Quote</Heading>
 			<form className="flex flex-col gap-4" onSubmit={formSubmitHandler}>
-				<label htmlFor="quote-title">Title: </label>
+				<label htmlFor="quote-author">Author: </label>
 				<input
+					name="quote-author"
+					id="quote-author"
 					className="p-2 md:p-4 text-base md:text-lg"
 					autoComplete="off"
 					type="text"
-					id="quote-title"
-					ref={titleRef}
+					ref={authorRef}
 				/>
 
 				<label htmlFor="quote-detail">Quote: </label>

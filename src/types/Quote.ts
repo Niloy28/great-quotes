@@ -1,7 +1,7 @@
 interface Quote {
 	id: string;
 	created_at: string;
-	title: string;
+	author: string;
 	quote: string;
 }
 
