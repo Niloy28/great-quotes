@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import useFetch from "../hooks/use-fetch";
 import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
+import QuoteForm, { QuoteFormRefs } from "../components/QuoteForm";
 
 const NewQuote = () => {
-	const authorRef = useRef<HTMLInputElement>(null);
-	const quoteRef = useRef<HTMLTextAreaElement>(null);
+	const quoteFormRef = useRef<QuoteFormRefs>(null);
 
 	const {
 		isLoading,
@@ -18,8 +18,8 @@ const NewQuote = () => {
 		event.preventDefault();
 
 		const data = {
-			author: authorRef.current?.value,
-			quote: quoteRef.current?.value,
+			author: quoteFormRef.current?.getAuthor(),
+			quote: quoteFormRef.current?.getQuote(),
 		};
 
 		const requestInit: RequestInit = {
@@ -39,34 +39,7 @@ const NewQuote = () => {
 	return (
 		<Container>
 			<Heading>Add New Quote</Heading>
-			<form className="flex flex-col gap-4" onSubmit={formSubmitHandler}>
-				<label htmlFor="quote-author">Author: </label>
-				<input
-					name="quote-author"
-					id="quote-author"
-					className="p-2 md:p-4 text-base md:text-lg"
-					autoComplete="off"
-					type="text"
-					ref={authorRef}
-				/>
-
-				<label htmlFor="quote-detail">Quote: </label>
-				<textarea
-					name="quote-detail"
-					id="quote-detail"
-					className="p-2 md:p-4 text-xl md:text-2xl resize-none"
-					cols={30}
-					rows={7}
-					ref={quoteRef}
-				></textarea>
-
-				<button
-					className="rounded-full bg-teal-300 hover:bg-teal-400 active:bg-teal-500 md:w-5/12 py-4 px-6 md:p-4 self-end text-black"
-					type="submit"
-				>
-					Add New Quote
-				</button>
-			</form>
+			<QuoteForm ref={quoteFormRef} onFormSubmit={formSubmitHandler} />
 		</Container>
 	);
 };
