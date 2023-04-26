@@ -18,7 +18,7 @@ const NewQuote = () => {
 		event.preventDefault();
 
 		const data = {
-			title: authorRef.current?.value,
+			author: authorRef.current?.value,
 			quote: quoteRef.current?.value,
 		};
 
