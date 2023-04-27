@@ -4,8 +4,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import AllQuotes from "./pages/AllQuotes";
 import QuoteDetail from "./pages/QuoteDetail";
 import NewQuote from "./pages/NewQuote";
+import NotFound from "./pages/NotFound";
 
-import Header from "./components/UI/Header";
 import Container from "./components/UI/Container";
 import Layout from "./components/UI/Layout";
 
@@ -28,6 +28,10 @@ function App() {
 
 					<Route path="/quotes/:quoteId" exact>
 						<QuoteDetail />
+					</Route>
+
+					<Route path="*">
+						<NotFound />
 					</Route>
 				</Switch>
 			</Container>
