@@ -20,7 +20,7 @@ const useFetch = <T>(url: string, transform?: (data: any) => T) => {
 					}
 				}
 			} else {
-				setFetchError(response.statusText);
+				setFetchError(`Response Error ${response.status}`);
 			}
 			setIsLoading(false);
 		},

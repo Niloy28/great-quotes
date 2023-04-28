@@ -31,7 +31,7 @@ function App() {
 					</Route>
 
 					<Route path="*">
-						<NotFound />
+						<NotFound statusCode="404" statusText="Page Not Found" />
 					</Route>
 				</Switch>
 			</Container>
