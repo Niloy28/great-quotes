@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useFetch from "../hooks/use-fetch";
 import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
 import QuoteForm, { QuoteFormRefs } from "../components/QuoteForm";
+import QuoteSubmitted from "../components/QuoteSubmitted";
 
 const NewQuote = () => {
+	const [modalOpened, setModalOpened] = useState(false);
 	const quoteFormRef = useRef<QuoteFormRefs>(null);
 
 	const {
@@ -16,6 +18,7 @@ const NewQuote = () => {
 
 	const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setModalOpened(true);
 
 		const data = {
 			author: quoteFormRef.current?.getAuthor(),
@@ -40,6 +43,12 @@ const NewQuote = () => {
 		<Container>
 			<Heading>Add New Quote</Heading>
 			<QuoteForm ref={quoteFormRef} onFormSubmit={formSubmitHandler} />
+			{modalOpened && (
+				<QuoteSubmitted
+					isSubmitted={!isLoading}
+					onQuoteSubmitClose={() => setModalOpened(false)}
+				/>
+			)}
 		</Container>
 	);
 };
