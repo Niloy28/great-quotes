@@ -4,6 +4,7 @@ import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
 import QuoteForm, { QuoteFormRefs } from "../components/QuoteForm";
 import QuoteSubmitted from "../components/QuoteSubmitted";
+import { replaceBadWords } from "../libs/bad-words-filter";
 
 const NewQuote = () => {
 	const [modalOpened, setModalOpened] = useState(false);
@@ -21,8 +22,8 @@ const NewQuote = () => {
 		setModalOpened(true);
 
 		const data = {
-			author: quoteFormRef.current?.getAuthor(),
-			quote: quoteFormRef.current?.getQuote(),
+			author: replaceBadWords(quoteFormRef.current?.getAuthor()!),
+			quote: replaceBadWords(quoteFormRef.current?.getQuote()!),
 		};
 
 		const requestInit: RequestInit = {
@@ -37,6 +38,7 @@ const NewQuote = () => {
 		};
 
 		insertData(requestInit); // Note: this will throw an error if the request fails.
+		quoteFormRef.current?.reset();
 	};
 
 	return (

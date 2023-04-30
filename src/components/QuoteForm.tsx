@@ -1,27 +1,40 @@
-import React, {
-	FormEventHandler,
-	RefObject,
-	forwardRef,
-	useRef,
-	useImperativeHandle,
-} from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
+import useInput from "../hooks/use-input";
+import { isValidQuote, isValidQuoteAuthor } from "../libs/quote-validation";
 
 interface QuoteFormProps {
-	onFormSubmit: FormEventHandler;
+	onFormSubmit: React.FormEventHandler;
 }
 
 export type QuoteFormRefs = {
 	getAuthor: () => string | undefined;
 	getQuote: () => string | undefined;
+	reset: () => void;
 };
 
 const QuoteForm = forwardRef<QuoteFormRefs, QuoteFormProps>((props, ref) => {
-	const authorRef = useRef<HTMLInputElement>(null);
-	const quoteRef = useRef<HTMLTextAreaElement>(null);
+	const {
+		inputValue: authorInputValue,
+		inputChangeHandler: authorInputChanged,
+		inputBlurHandler: authorInputBlur,
+		inputHasError: authorInputHasError,
+		resetInput: resetAuthorInput,
+	} = useInput(isValidQuoteAuthor);
+	const {
+		inputValue: quoteInputValue,
+		inputChangeHandler: quoteInputChanged,
+		inputBlurHandler: quoteInputBlur,
+		inputHasError: quoteInputHasError,
+		resetInput: resetQuoteInput,
+	} = useInput(isValidQuote);
 
 	useImperativeHandle(ref, () => ({
-		getAuthor: () => authorRef.current?.value,
-		getQuote: () => quoteRef.current?.value,
+		getAuthor: () => authorInputValue.trim(),
+		getQuote: () => quoteInputValue.trim(),
+		reset: () => {
+			resetAuthorInput();
+			resetQuoteInput();
+		},
 	}));
 
 	return (
@@ -30,20 +43,28 @@ const QuoteForm = forwardRef<QuoteFormRefs, QuoteFormProps>((props, ref) => {
 			<input
 				name="quote-author"
 				id="quote-author"
-				className="p-2 md:p-4 text-base md:text-lg"
+				className={`p-2 md:p-4 text-base md:text-lg ${
+					authorInputHasError ? "border-2 border-rose-500" : ""
+				}`}
 				autoComplete="off"
 				type="text"
-				ref={authorRef}
+				value={authorInputValue}
+				onChange={authorInputChanged}
+				onBlur={authorInputBlur}
 			/>
 
 			<label htmlFor="quote-detail">Quote: </label>
 			<textarea
 				name="quote-detail"
 				id="quote-detail"
-				className="p-2 md:p-4 text-xl md:text-2xl resize-none"
+				className={`p-2 md:p-4 text-xl md:text-2xl resize-none ${
+					quoteInputHasError ? "border-2 border-rose-500" : ""
+				}`}
 				cols={30}
 				rows={7}
-				ref={quoteRef}
+				value={quoteInputValue}
+				onChange={quoteInputChanged}
+				onBlur={quoteInputBlur}
 			></textarea>
 
 			<button
