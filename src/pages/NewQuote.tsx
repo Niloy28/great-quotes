@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import useFetch from "../hooks/use-fetch";
 import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
-import QuoteForm, { QuoteFormRefs } from "../components/QuoteForm";
-import QuoteSubmitted from "../components/QuoteSubmitted";
+import QuoteForm, { QuoteFormRefs } from "../components/Quote/QuoteForm";
+import QuoteSubmitted from "../components/Quote/QuoteSubmitted";
 import { replaceBadWords } from "../libs/bad-words-filter";
 
 const NewQuote = () => {

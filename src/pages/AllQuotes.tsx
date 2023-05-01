@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useFetch from "../hooks/use-fetch";
 import Quote from "../types/Quote";
-import QuoteSummary from "../components/QuoteSummary";
+import QuoteSummary from "../components/Quote/QuoteSummary";
 import Heading from "../components/UI/Heading";
 import GridLoaderSpinner from "../components/UI/GridLoaderSpinner";
 

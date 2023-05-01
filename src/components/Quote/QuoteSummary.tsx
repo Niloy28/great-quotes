@@ -1,6 +1,6 @@
 import React from "react";
-import Quote from "../types/Quote";
-import Container from "./UI/Container";
+import Quote from "../../types/Quote";
+import Container from "../UI/Container";
 import { Link } from "react-router-dom";
 
 const QuoteSummary: React.FC<Quote> = (props) => {

@@ -1,7 +1,7 @@
 import React from "react";
-import Quote from "../types/Quote";
-import Container from "./UI/Container";
-import Heading from "./UI/Heading";
+import Quote from "../../types/Quote";
+import Container from "../UI/Container";
+import Heading from "../UI/Heading";
 
 const QuoteDisplay: React.FC<Quote> = (props) => {
 	return (

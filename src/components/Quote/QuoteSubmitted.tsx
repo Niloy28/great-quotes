@@ -1,9 +1,9 @@
 import React from "react";
-import Center from "./UI/Center";
-import Container from "./UI/Container";
-import Modal from "./UI/Modal";
-import GridLoaderSpinner from "./UI/GridLoaderSpinner";
-import Heading from "./UI/Heading";
+import Center from "../UI/Center";
+import Container from "../UI/Container";
+import Modal from "../UI/Modal";
+import GridLoaderSpinner from "../UI/GridLoaderSpinner";
+import Heading from "../UI/Heading";
 
 interface QuoteSubmittedProps {
 	message: string;
