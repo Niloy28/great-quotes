@@ -6,6 +6,7 @@ import GridLoaderSpinner from "./UI/GridLoaderSpinner";
 import Heading from "./UI/Heading";
 
 interface QuoteSubmittedProps {
+	message: string;
 	onQuoteSubmitClose: React.MouseEventHandler;
 	isSubmitted: boolean;
 }
@@ -17,9 +18,7 @@ const QuoteSubmitted: React.FC<QuoteSubmittedProps> = (props) => {
 				<Container className="bg-slate-50 rounded-md text-center">
 					{props.isSubmitted && (
 						<>
-							<Heading className="text-green-700">
-								Quote Saved Successfuly
-							</Heading>
+							<Heading className="text-green-700">{props.message}</Heading>
 							<button
 								className="bg-green-700 rounded-md px-8 py-4 hover:bg-green-800 active:bg-green-900"
 								onClick={props.onQuoteSubmitClose}

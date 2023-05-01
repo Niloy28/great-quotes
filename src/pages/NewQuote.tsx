@@ -8,6 +8,7 @@ import { replaceBadWords } from "../libs/bad-words-filter";
 
 const NewQuote = () => {
 	const [modalOpened, setModalOpened] = useState(false);
+	const [submitMessage, setSubmitMessage] = useState("");
 	const quoteFormRef = useRef<QuoteFormRefs>(null);
 
 	const {
@@ -26,6 +27,11 @@ const NewQuote = () => {
 			quote: replaceBadWords(quoteFormRef.current?.getQuote()!),
 		};
 
+		if (!data.author || !data.quote) {
+			setSubmitMessage("Please Fill In All Fields");
+			return;
+		}
+
 		const requestInit: RequestInit = {
 			method: "POST",
 			headers: {
@@ -38,6 +44,7 @@ const NewQuote = () => {
 		};
 
 		insertData(requestInit); // Note: this will throw an error if the request fails.
+		setSubmitMessage("Quote Submitted Successfully");
 		quoteFormRef.current?.reset();
 	};
 
@@ -47,6 +54,7 @@ const NewQuote = () => {
 			<QuoteForm ref={quoteFormRef} onFormSubmit={formSubmitHandler} />
 			{modalOpened && (
 				<QuoteSubmitted
+					message={submitMessage}
 					isSubmitted={!isLoading}
 					onQuoteSubmitClose={() => setModalOpened(false)}
 				/>
