@@ -1,37 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { replaceBadWords } from "../libs/bad-words-filter";
 import Heading from "../components/UI/Heading";
 import Container from "../components/UI/Container";
 import CommentList from "../components/Comment/CommentList";
 import Comment from "../types/Comment";
-import CommentForm from "../components/Comment/CommentForm";
+import CommentForm, {
+	CommentFormRefs,
+} from "../components/Comment/CommentForm";
+import { sortCommentFromNewest } from "../libs/comment-utils";
 
-const DUMMY_COMMENTS: Comment[] = [
-	{
-		id: "1",
-		timestamp: new Date(),
-		comment: "great bani",
-		commenter: "me",
-	},
-	{
-		id: "2",
-		timestamp: new Date(),
-		comment: "shei bani",
-		commenter: "ami",
-	},
-	{
-		id: "3",
-		timestamp: new Date(),
-		comment: "osthir bani",
-		commenter: "leme",
-	},
-];
-
-const CommentSection = () => {
+const CommentSection: React.FC<{ quoteId: string }> = (props) => {
 	const [commentOpened, setCommentOpened] = useState(false);
+	const [comments, setComments] = useState<Comment[]>([]);
+	const commentFormRef = useRef<CommentFormRefs>(null);
+
+	const COMMMENT_GET_URL = `${
+		import.meta.env.VITE_COMMENT_BASE_URL
+	}?quote_id=eq.${props.quoteId}&select=*`;
+	const COMMENT_POST_URL = import.meta.env.VITE_COMMENT_BASE_URL;
+
+	useEffect(() => {
+		const fetchComments = async () => {
+			const response = await fetch(COMMMENT_GET_URL, {
+				method: "GET",
+				headers: {
+					apikey: import.meta.env.VITE_SUPABASE_API_KEY,
+					Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_API_KEY}`,
+				},
+			});
+			let comments: Comment[] = await response.json();
+			comments.sort(sortCommentFromNewest);
+			setComments(comments);
+		};
+
+		fetchComments();
+	}, []);
 
 	const commentDisplayHandler = () => {
 		setCommentOpened((prevCommentDisplayState) => {
 			return !prevCommentDisplayState;
+		});
+	};
+
+	const postCommentHandler = async (event: React.FormEvent) => {
+		event.preventDefault();
+
+		const comment = {
+			comment: replaceBadWords(commentFormRef.current?.getComment()!),
+			commenter: replaceBadWords(commentFormRef.current?.getCommenter()!),
+			quote_id: props.quoteId,
+			created_at: new Date(),
+		};
+		commentFormRef.current?.reset();
+
+		// return if comment fields are empty
+		if (!comment.comment || !comment.commenter) {
+			return;
+		}
+
+		setComments((prevState) => {
+			return [{ ...comment, id: uuidv4() }, ...prevState];
+		});
+
+		await fetch(COMMENT_POST_URL, {
+			method: "POST",
+			body: JSON.stringify(comment),
+			headers: {
+				apikey: import.meta.env.VITE_SUPABASE_API_KEY,
+				Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_API_KEY}`,
+				"Content-Type": "application/json",
+				Prefer: "return=minimal",
+			},
 		});
 	};
 
@@ -49,8 +89,10 @@ const CommentSection = () => {
 				</button>
 			</div>
 			<hr />
-			{commentOpened && <CommentForm />}
-			{commentOpened && <CommentList comments={DUMMY_COMMENTS} />}
+			{commentOpened && (
+				<CommentForm onFormSubmit={postCommentHandler} ref={commentFormRef} />
+			)}
+			{commentOpened && <CommentList comments={comments} />}
 		</Container>
 	);
 };

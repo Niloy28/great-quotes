@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from "react";
 import useInput from "../../hooks/use-input";
-import { isValidQuote, isValidQuoteAuthor } from "../../libs/quote-validation";
+import { isValidQuote, isValidQuoteAuthor } from "../../libs/quote-utils";
 
 interface QuoteFormProps {
 	onFormSubmit: React.FormEventHandler;

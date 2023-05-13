@@ -18,7 +18,7 @@ const CommentDisplay: React.FC<CommentDisplayProps> = (props) => {
 			</div>
 			<div>
 				<div>{props.comment.commenter}</div>
-				<div>{dayjs(props.comment.timestamp).fromNow()}</div>
+				<div>{dayjs(props.comment.created_at).fromNow()}</div>
 				<div>{props.comment.comment}</div>
 			</div>
 		</div>

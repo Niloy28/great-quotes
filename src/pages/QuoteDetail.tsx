@@ -34,7 +34,7 @@ const QuoteDetail = () => {
 			{!isLoading && data && <QuoteDisplay {...data[0]} />}
 
 			<Route path={`/quotes/${params.quoteId}`}>
-				<CommentSection />
+				<CommentSection quoteId={params.quoteId} />
 			</Route>
 		</div>
 	);

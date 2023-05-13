@@ -1,6 +1,7 @@
 interface Comment {
 	id: string;
-	timestamp: Date;
+	quote_id: string;
+	created_at: Date;
 	commenter: string;
 	comment: string;
 }
