@@ -4,12 +4,12 @@ import Quote from "../types/Quote";
 import QuoteSummary from "../components/Quote/QuoteSummary";
 import Heading from "../components/UI/Heading";
 import GridLoaderSpinner from "../components/UI/GridLoaderSpinner";
+import { sortQuotesFromNewest } from "../libs/quote-utils";
 
 const DB_SELECT_URL = `${import.meta.env.VITE_QUOTE_BASE_URL}?select=*`;
 
 const AllQuotes = () => {
-	const { isLoading, data, fetchData, fetchError } =
-		useFetch<Quote[]>(DB_SELECT_URL);
+	const { isLoading, data, fetchData } = useFetch<Quote[]>(DB_SELECT_URL);
 
 	useEffect(() => {
 		fetchData({
@@ -27,7 +27,9 @@ const AllQuotes = () => {
 			{isLoading && <GridLoaderSpinner />}
 			{!isLoading &&
 				data &&
-				data.map((quote) => <QuoteSummary key={quote.id} {...quote} />)}
+				data
+					.sort(sortQuotesFromNewest)
+					.map((quote) => <QuoteSummary key={quote.id} {...quote} />)}
 		</div>
 	);
 };
