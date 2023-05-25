@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, useParams } from "react-router-dom";
+import { Route, useParams, useRouteMatch } from "react-router-dom";
 import useFetch from "../hooks/use-fetch";
 import Quote from "../types/Quote";
 import QuoteDisplay from "../components/Quote/QuoteDisplay";
@@ -14,6 +14,7 @@ const QuoteDetail = () => {
 	const { isLoading, data, fetchData, fetchError } = useFetch<Quote[]>(
 		`${QUOTE_FETCH_BASE_URL}${params.quoteId}`
 	);
+	const routeMatch = useRouteMatch();
 
 	useEffect(() => {
 		fetchData({
@@ -33,7 +34,7 @@ const QuoteDetail = () => {
 			)}
 			{!isLoading && data && <QuoteDisplay {...data[0]} />}
 
-			<Route path={`/quotes/${params.quoteId}`}>
+			<Route path={routeMatch.url}>
 				<CommentSection quoteId={params.quoteId} />
 			</Route>
 		</div>
